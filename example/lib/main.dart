@@ -15,36 +15,26 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+class CounterIncrementor extends StatelessWidget {
+  const CounterIncrementor({required this.onPressed, Key? key})
+      : super(key: key);
 
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: const Text('Provide consent'),
+    );
+  }
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    initPlatformState();
-    ApsisOne.setLogLevel(1);
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await ApsisOne.platformVersion ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
+    // ApsisOne.setMinimumLogLevel(ONELogLevel.info);
   }
 
   @override
@@ -55,9 +45,17 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          // child: Text('ApsisOne App Tool Example App'),
+          child: CounterIncrementor(onPressed: _increment),
         ),
       ),
     );
+  }
+
+  void _increment() {
+    setState(() {
+      ApsisOne.setMinimumLogLevel(ONELogLevel.warning);
+      // ApsisOne.provideConsent(ONEConsentType.collectData);
+    });
   }
 }
