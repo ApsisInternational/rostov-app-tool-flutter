@@ -11,95 +11,54 @@
 @implementation ApsisOnePlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* apsisOneChannel = [FlutterMethodChannel methodChannelWithName:@"apsis_one"
-                                                                       binaryMessenger:[registrar messenger]];
+                                                                        binaryMessenger:[registrar messenger]];
     ApsisOnePlugin *instance = ApsisOnePlugin.new;
     [registrar addMethodCallDelegate:instance channel:apsisOneChannel];
 }
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
-    NSLog(@"Method was called: %@", call.method);
+    NSLog(@"Method was called: %@ with args %@", call.method, call.arguments);
+    
     if ([call.method isEqualToString:@"setMinimumLogLevel"]) {
-      ONELogLevel logLevel = call.arguments[@"logLevel"];
-      [ApsisOneAPI setMinimumLogLevel:logLevel];
-      result(nil);
+        ONELogLevel logLevel = (ONELogLevel)[call.arguments[@"logLevel"] intValue];
+        [ApsisOneAPI setMinimumLogLevel:logLevel];
+        result(nil);
     } else if([call.method isEqualToString:@"provideConsent"]) {
-      ONEConsentType consentType = call.arguments[@"consentType"];
-      [ApsisOneAPI provideConsent:consentType];
-      result(nil);
+        ONEConsentType consentType = (ONEConsentType)[call.arguments[@"consentType"] intValue];
+        [ApsisOneAPI provideConsent:consentType];
+        result(nil);
     } else if([call.method isEqualToString:@"removeConsent"]) {
-
+        ONEConsentType consentType = (ONEConsentType)[call.arguments[@"consentType"] intValue];
+        [ApsisOneAPI removeConsent:consentType];
+        result(nil);
     } else if([call.method isEqualToString:@"subscribeOnConsentLost"]) {
-
+        
     } else if([call.method isEqualToString:@"startCollectingLocation"]) {
-
+        ONELocationFrequency locationFrequency = (ONELocationFrequency)[call.arguments[@"frequency"] intValue];
+        [ApsisOneAPI startCollectingLocation:locationFrequency];
     } else if([call.method isEqualToString:@"stopCollectingLocation"]) {
-
+        [ApsisOneAPI stopCollectingLocation];
     } else if([call.method isEqualToString:@"trackScreenViewEvent"]) {
-
+        NSString *screenName = call.arguments[@"event"];
+        ONEScreenViewEvent *screenViewEvent = [ONEScreenViewEvent eventWithViewName:screenName
+                                                                          className:@"FlutterView"];
+        [ApsisOneAPI trackScreenViewEvent:screenViewEvent];
     } else if([call.method isEqualToString:@"trackCustomEvent"]) {
-
-    } else if([call.method isEqualToString:@"trackCustomEvent"]) {
-
+        NSString *eventId = call.arguments[@"eventId"];
+        NSDictionary *eventData = call.arguments[@"data"];
+        ONECustomEvent *customEvent = [ONECustomEvent eventWithId:eventId
+                                                             data:eventData];
+        [ApsisOneAPI trackCustomEvent:customEvent];
+    } else if([call.method isEqualToString:@"trackLocation"]) {
+        double latitude = [call.arguments[@"latitude"] doubleValue];
+        double longitude = [call.arguments[@"longitude"] doubleValue];
+        ONEPlacemark *placemark = [ONEPlacemark placemarkWithName:call.arguments[@"placemarkName"]
+                                                          address:call.arguments[@"placemarkAddress"]];
+        NSUInteger accuracy = [call.arguments[@"accuracy"] unsignedIntegerValue];
+        [ApsisOneAPI trackLocationWithLatitude:latitude longitude:longitude placemark:placemark horizontalAccuracy:accuracy];
     } else {
-      result(FlutterMethodNotImplemented);
+        result(FlutterMethodNotImplemented);
     }
 }
-
-// RCT_EXPORT_METHOD(provideConsent:(ONEConsentType)consentType) {
-//     [ApsisOneAPI provideConsent:consentType];
-// }
-
-// RCT_EXPORT_METHOD(removeConsent:(ONEConsentType)consentType) {
-//     [ApsisOneAPI removeConsent:consentType];
-// }
-
-// RCT_EXPORT_METHOD(subscribeCollectDataConsentLost:(RCTResponseSenderBlock)consentLostHandler) {
-//     [ApsisOneAPI subscribeOnConsentLost:^(ONEConsentType consentType) {
-//         if (consentType == ONEConsentTypeCollectData) {
-//             consentLostHandler(@[]);
-//         }
-//     }];
-// }
-
-// RCT_EXPORT_METHOD(trackScreenViewEvent:(NSString *)event) {
-//     ONEScreenViewEvent *screenViewEvent = [ONEScreenViewEvent eventWithViewName:event
-//                                                                       className:@"RNView"];
-//     [ApsisOneAPI trackScreenViewEvent:screenViewEvent];
-// }
-
-// RCT_EXPORT_METHOD(trackCustomEvent:(NSString *)eventId data:(NSString *)eventData) {
-//     NSData *jsonData = [eventData dataUsingEncoding:NSUTF8StringEncoding];
-//     NSError *error;
-//     NSDictionary *data = [NSJSONSerialization JSONObjectWithData:jsonData
-//                                                          options:NSJSONReadingAllowFragments
-//                                                            error:&error];
-    
-//     if (error) {
-//         return;
-//     }
-//     ONECustomEvent *event = [ONECustomEvent eventWithId:eventId data:data];
-//     [ApsisOneAPI trackCustomEvent:event];
-// }
-
-// RCT_EXPORT_METHOD(setMinimumLogLevel:(ONELogLevel)level) {
-//     [ApsisOneAPI setMinimumLogLevel:level];
-// }
-
-// RCT_EXPORT_METHOD(startCollectingLocation:(ONELocationFrequency)frequency) {
-//     [ApsisOneAPI startCollectingLocation:frequency];
-// }
-
-// RCT_EXPORT_METHOD(stopCollectingLocation) {
-//     [ApsisOneAPI stopCollectingLocation];
-// }
-
-// RCT_EXPORT_METHOD(trackLocation:(double)latitude longitude:(double)longitude placemark:(NSString *)placemark address:(NSString *)address accuracy:(NSUInteger)accuracy) {
-//     ONEPlacemark *onePlacemark = [ONEPlacemark placemarkWithName:placemark
-//                                                          address:address];
-//     [ApsisOneAPI trackLocationWithLatitude:latitude
-//                                  longitude:longitude
-//                                  placemark:onePlacemark
-//                         horizontalAccuracy:accuracy];
-// }
 
 @end
