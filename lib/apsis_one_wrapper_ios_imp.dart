@@ -2,7 +2,8 @@ import 'apsis_one_wrapper.dart';
 import 'package:flutter/services.dart';
 
 class ApsisOneIOS_Imp implements ApsisOneFlutter {
-  static const MethodChannel _channel = MethodChannel('apsis_one');
+  final MethodChannel _channel = MethodChannel('com.apsis.one/publicapi');
+  final EventChannel _eventChannel = EventChannel('com.apsis.one/consents');
 
   @override
   Future<void> setMinimumLogLevel(int level) async {
@@ -50,6 +51,17 @@ class ApsisOneIOS_Imp implements ApsisOneFlutter {
   Future<void> stopCollectingLocation() async {
     print('Stop collecting location iOS implementation');
     await _channel.invokeMethod('stopCollectingLocation'); 
+  }
+
+  @override
+  Future<void> subscribeOnConsentLost(Future<dynamic> handler(int consentType)) async {
+    print('Subscribe on consent lost iOS implementation');
+    consentLostHandler(dynamic event) {
+      handler(event);
+    }
+    consentLostErrorHandler(dynamic error) => print('Received error: ${error.message}');
+    _eventChannel.receiveBroadcastStream().listen(consentLostHandler, onError: consentLostErrorHandler);
+    await _channel.invokeMethod('subscribeOnConsentLost', {'consentType':oneConsentTypeCollectData});
   }
 
   @override

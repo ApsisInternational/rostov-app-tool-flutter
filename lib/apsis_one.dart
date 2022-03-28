@@ -61,9 +61,11 @@ class ApsisOne {
     await apsisOne.stopCollectingLocation();
   }
 
-  // static Future<void> subscribeOnConsentLost(MethodCall call) async {
-  //   await _channel.invokeMethod('subscribeOnConsentLost', {'methodCall':call});
-  // }
+  static Future<void> subscribeOnConsentLost(Future<dynamic> handler(ONEConsentType consentType)) async {
+    await apsisOne.subscribeOnConsentLost((int consentType) async {
+      handler(consentTypeFromNative(consentType));
+    });
+  }
 
   static int getNativeLogLevel(ONELogLevel level) {
     switch (level) {
@@ -87,6 +89,13 @@ class ApsisOne {
       case ONEConsentType.collectLocation:
         return apsisOne.oneConsentTypeCollectLocation;
     }
+  }
+
+  static ONEConsentType consentTypeFromNative(int nativeConsentType) {
+    if (nativeConsentType == apsisOne.oneConsentTypeCollectLocation) {
+      return ONEConsentType.collectLocation;
+    }
+    return ONEConsentType.collectData;
   }
 
   static int getNativeFrequency(ONELocationFrequency frequency) {

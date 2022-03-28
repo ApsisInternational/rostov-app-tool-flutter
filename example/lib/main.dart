@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -5,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:apsis_one/apsis_one.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MaterialApp(home:MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -17,7 +18,7 @@ class MyApp extends StatefulWidget {
 
 class CustomButton extends StatelessWidget {
   const CustomButton({required this.onPressed, required this.title, Key? key})
-      : super(key: key);
+    : super(key: key);
 
   final VoidCallback onPressed;
   final String title;
@@ -31,11 +32,56 @@ class CustomButton extends StatelessWidget {
   }
 }
 
+class BlurryDialog extends StatelessWidget {
+  String title;
+  String content;
+
+  BlurryDialog(this.title, this.content);
+  TextStyle textStyle = TextStyle (color: Colors.black);
+
+  @override
+  Widget build(BuildContext context) {
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+      child:  AlertDialog(
+      title: new Text(title,style: textStyle,),
+      content: new Text(content, style: textStyle,),
+      actions: <Widget>[
+        new FlatButton(
+          child: Text("OK"),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+      ));
+  }
+}
+
 class _MyAppState extends State<MyApp> {
+
+  _showDialog(BuildContext context) {
+
+  BlurryDialog alert = BlurryDialog("Consents","Collection Data Consent was lost");
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    });
+  }
+
+  Future<dynamic> handler(ONEConsentType consentType) async {
+    if (consentType == ONEConsentType.collectData) {
+      _showDialog(context);  
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     ApsisOne.setMinimumLogLevel(ONELogLevel.info);
+    ApsisOne.subscribeOnConsentLost(handler);
   }
 
   @override

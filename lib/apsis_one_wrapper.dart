@@ -19,7 +19,7 @@ abstract class ApsisOneFlutter {
     Future<void> setMinimumLogLevel(int level);
     Future<void> provideConsent(int consentType);
     Future<void> removeConsent(int consentType);
-    // Future<void> subscribeOnConsentLost(MethodCall call);
+    Future<void> subscribeOnConsentLost(Future<dynamic> handler(int consentType));
     Future<void> startCollectingLocation(int frequency);
     Future<void> stopCollectingLocation();
     Future<void> trackScreenViewEvent(String event);
