@@ -14,6 +14,21 @@ import CoreLocation
     self.locationManager.delegate = self
     self.requestLocationAuthorization()
     GeneratedPluginRegistrant.register(with: self)
+      let controller: FlutterViewController = window?.rootViewController as! FlutterViewController
+      let channel = FlutterMethodChannel.init(name: "com.apsis.one/sampleapp", binaryMessenger: controller.binaryMessenger)
+      
+      channel.setMethodCallHandler({
+          (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+          if ("switchView" == call.method) {
+              let platformViewController = PlatformViewController(nibName: "PlatformViewController", bundle: nil)
+              
+              let navigationController = UINavigationController(rootViewController: platformViewController)
+              navigationController.navigationBar.topItem?.title = "Platform View"
+              controller.present(navigationController, animated: true, completion: nil)
+          } else {
+              result(FlutterMethodNotImplemented)
+          }
+      });
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
     

@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:apsis_one/apsis_one.dart';
+import 'second.dart';
 
 void main() {
   runApp(MaterialApp(home:MyApp()));
@@ -59,6 +60,7 @@ class BlurryDialog extends StatelessWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  static const MethodChannel _methodChannel = MethodChannel('com.apsis.one/sampleapp');
 
   _showDialog(BuildContext context) {
 
@@ -95,17 +97,19 @@ class _MyAppState extends State<MyApp> {
           child: Column (
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              CustomButton (onPressed: _provideCollectDataConsent,  title: 'Provide data consent'),
-              CustomButton (onPressed: _removeCollectDataConsent,  title: 'Remove data consent'),
-              CustomButton (onPressed: _provideCollectLocationConsent,  title: 'Provide location consent'),
-              CustomButton (onPressed: _removeCollectLocationConsent,  title: 'Remove location consent'),
-              CustomButton (onPressed: _trackScreenViewEvent,  title: 'Track screenView event'),
-              CustomButton (onPressed: _trackCustomEvent,  title: 'Track custom event'),
-              CustomButton (onPressed: _trackCustomLocation,  title: 'Track custom location'),
-              CustomButton (onPressed: _startCollectLocationLow,  title: 'Start collecting location low'),
-              CustomButton (onPressed: _startCollectLocationMedium,  title: 'Start collecting location medium'),
-              CustomButton (onPressed: _startCollectLocationHigh,  title: 'Start collecting location high'),
-              CustomButton (onPressed: _stopCollectLocation,  title: 'Stop collecting location'),
+              CustomButton (onPressed: _provideCollectDataConsent, title: 'Provide data consent'),
+              CustomButton (onPressed: _removeCollectDataConsent, title: 'Remove data consent'),
+              CustomButton (onPressed: _provideCollectLocationConsent, title: 'Provide location consent'),
+              CustomButton (onPressed: _removeCollectLocationConsent, title: 'Remove location consent'),
+              CustomButton (onPressed: _trackScreenViewEvent, title: 'Track screenView event'),
+              CustomButton (onPressed: _trackCustomEvent, title: 'Track custom event'),
+              CustomButton (onPressed: _trackCustomLocation, title: 'Track custom location'),
+              CustomButton (onPressed: _startCollectLocationLow, title: 'Start collecting location low'),
+              CustomButton (onPressed: _startCollectLocationMedium, title: 'Start collecting location medium'),
+              CustomButton (onPressed: _startCollectLocationHigh, title: 'Start collecting location high'),
+              CustomButton (onPressed: _stopCollectLocation, title: 'Stop collecting location'),
+              CustomButton (onPressed: _presentCustomView, title: 'Present Custom view'),
+              CustomButton (onPressed: _presentView, title: 'iOS Present Modally native view'),
             ],
           ),
         ),
@@ -152,7 +156,7 @@ class _MyAppState extends State<MyApp> {
         'text' : 'testText',
         'trueFalse' : true
       };
-      ApsisOne.trackCustomEvent('com.apsis1.events.transaction.custom-testcustomevent-3c3yitjo4j', testCustomEventData);
+      ApsisOne.trackCustomEvent('com.apsis1.events.transaction.custom-testcustomevent-651e5udu28', testCustomEventData);
     });
   }
 
@@ -184,5 +188,13 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       ApsisOne.stopCollectingLocation();
     });
+  }
+
+  void _presentCustomView() {
+    Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context) => new DetailView()));
+  }
+
+  Future<void> _presentView() async {
+    await _methodChannel.invokeMethod('switchView');
   }
 }

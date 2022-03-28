@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlatformViewController" customModule="Runner" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Vb-F2-qFl">
+                    <rect key="frame" x="32" y="423" width="350" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="8L9-eI-hrA"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="Continue in Flutter View"/>
+                    <connections>
+                        <action selector="switchToFlutterView:" destination="-1" eventType="touchUpInside" id="tzA-cQ-gl6"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="1Vb-F2-qFl" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="8Y2-zi-Ovf"/>
+                <constraint firstItem="1Vb-F2-qFl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="32" id="MCK-64-hoG"/>
+                <constraint firstAttribute="trailing" secondItem="1Vb-F2-qFl" secondAttribute="trailing" constant="32" id="Toq-vo-KR3"/>
+                <constraint firstItem="1Vb-F2-qFl" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="oqc-M0-PoP"/>
+            </constraints>
+            <point key="canvasLocation" x="144.92753623188406" y="64.955357142857139"/>
+        </view>
+    </objects>
+</document>
