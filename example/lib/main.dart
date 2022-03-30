@@ -63,14 +63,13 @@ class _MyAppState extends State<MyApp> {
   static const MethodChannel _methodChannel = MethodChannel('com.apsis.one/sampleapp');
 
   _showDialog(BuildContext context) {
-
-  BlurryDialog alert = BlurryDialog("Consents","Collection Data Consent was lost");
-
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    });
+    BlurryDialog alert = BlurryDialog("Consents","Collection Data Consent was lost");
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      }
+    );
   }
 
   Future<dynamic> handler(ONEConsentType consentType) async {
@@ -91,10 +90,17 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('ApsisOne Flutter Example App'),
         ),
         body: Center(
-          child: Column (
+          child: Center(child: mainMenu()),
+        ),
+      ),
+    );
+  }
+
+  Widget mainMenu() {
+    return Column (
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               CustomButton (onPressed: _provideCollectDataConsent, title: 'Provide data consent'),
@@ -111,10 +117,7 @@ class _MyAppState extends State<MyApp> {
               CustomButton (onPressed: _presentCustomView, title: 'Present Custom view'),
               CustomButton (onPressed: _presentView, title: 'iOS Present Modally native view'),
             ],
-          ),
-        ),
-      ),
-    );
+          );
   }
 
   void _provideCollectDataConsent() {
