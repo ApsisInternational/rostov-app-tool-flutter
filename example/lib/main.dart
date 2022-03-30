@@ -7,7 +7,10 @@ import 'package:apsis_one/apsis_one.dart';
 import 'second.dart';
 
 void main() {
-  runApp(MaterialApp(home:MyApp()));
+  runApp(MaterialApp(
+    home:MyApp(),
+    navigatorObservers: [ApsisOne.oneRouteObserver],
+  ));
 }
 
 class MyApp extends StatefulWidget {

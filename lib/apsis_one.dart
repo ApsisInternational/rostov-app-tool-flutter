@@ -2,6 +2,9 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'apsis_one_wrapper.dart';
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'route_observer.dart';
 
 enum ONELocationFrequency {
   low,
@@ -22,8 +25,11 @@ enum ONELogLevel {
   none
 }
 
+
 class ApsisOne {    
   static ApsisOneFlutter apsisOne = ApsisOneFlutter();
+
+  static ONERouteObserver oneRouteObserver = ONERouteObserver();
 
   static Future<void> setMinimumLogLevel(ONELogLevel level) async {
     final int nativeLevel = getNativeLogLevel(level);
