@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'extras.dart';
 
 class DetailView extends StatelessWidget {
 
