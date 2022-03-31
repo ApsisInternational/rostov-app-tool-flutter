@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'apsis_one.dart';
 
 class ONERouteObserver extends RouteObserver<PageRoute<dynamic>> {
-  void _sendScreenView(PageRoute<dynamic> route) {
+  void _trackScreenView(PageRoute<dynamic> route) {
     var screenName = route.settings.name;
-    print('screenName $screenName');
+    ApsisOne.trackScreenViewEvent('$screenName');
   }
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
     if (route is PageRoute) {
-      _sendScreenView(route);
+      _trackScreenView(route);
     }
   }
 
@@ -18,7 +19,7 @@ class ONERouteObserver extends RouteObserver<PageRoute<dynamic>> {
   void didReplace({ Route<dynamic>? newRoute, Route<dynamic>? oldRoute }) {
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
     if (newRoute is PageRoute) {
-      _sendScreenView(newRoute);
+      _trackScreenView(newRoute);
     }
   }
 
@@ -26,7 +27,7 @@ class ONERouteObserver extends RouteObserver<PageRoute<dynamic>> {
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
     if (previousRoute is PageRoute && route is PageRoute) {
-      _sendScreenView(previousRoute);
+      _trackScreenView(previousRoute);
     }
   }
 }
