@@ -1,4 +1,4 @@
-package com.example.apsis_one_example
+package com.apsis_one.flutter_example
 
 import io.flutter.embedding.android.FlutterActivity
 

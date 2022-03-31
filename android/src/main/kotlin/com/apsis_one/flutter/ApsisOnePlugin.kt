@@ -1,5 +1,7 @@
 package com.apsis_one.flutter
 
+import android.app.Activity
+import android.content.Context
 import androidx.annotation.NonNull
 import com.apsis.android.apsisone.ApsisCallback
 import com.apsis.android.apsisone.ApsisOne
@@ -9,6 +11,9 @@ import com.apsis.android.apsisone.util.LogLevel
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -16,19 +21,23 @@ import io.flutter.plugin.common.MethodChannel.Result
 import org.json.JSONObject
 
 /** ApsisOnePlugin */
-class ApsisOnePlugin: FlutterPlugin, MethodCallHandler {
+class ApsisOnePlugin: FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler, ActivityAware {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
   private lateinit var apiChannel : MethodChannel
-  private lateinit var consentChannel : MethodChannel
+  private lateinit var consentChannel : EventChannel
+  private var eventSink : EventChannel.EventSink? = null
+  private lateinit var context: Context
+  private var activity: Activity? = null
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    context = flutterPluginBinding.applicationContext
     apiChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "com.apsis.one/publicapi")
     apiChannel.setMethodCallHandler(this)
-    consentChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "com.apsis.one/consents")
-    consentChannel.setMethodCallHandler(this)
+    consentChannel = EventChannel(flutterPluginBinding.binaryMessenger, "com.apsis.one/consents")
+    consentChannel.setStreamHandler(this)
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -77,13 +86,13 @@ class ApsisOnePlugin: FlutterPlugin, MethodCallHandler {
       }
     } else if (call.method == "trackScreenViewEvent") {
       call.argument<String>("event")?.let { event ->
-        ApsisOne.trackScreenViewEvent(event, mainActivity)
+        activity?.let { ApsisOne.trackScreenViewEvent(event, it) }
       } ?: run {
         result.error("6", "Need event parameter", null)
       }
     } else if (call.method == "trackCustomEvent") {
       call.argument<String>("eventId")?.let { eventId ->
-        call.argument<JSONObject>("data")?.let { data ->
+        call.argument<HashMap<String, Any>>("data")?.let { data ->
           ApsisOne.trackCustomEvent(eventId, ApsisUtils.fromJson<JsonObject>(data.toString()))
         } ?: run {
           result.error("8", "Need data parameter", null)
@@ -95,9 +104,9 @@ class ApsisOnePlugin: FlutterPlugin, MethodCallHandler {
       call.argument<Double>("latitude")?.let { latitude ->
         call.argument<Double>("longitude")?.let { longitude ->
           call.argument<String>("placemarkName")?.let { placemarkName ->
-            call.argument<String>("placemarAddress")?.let { placemarAddress ->
+            call.argument<String>("placemarkAddress")?.let { placemarkAddress ->
               call.argument<Int>("accuracy")?.let { accuracy ->
-                ApsisOne.trackLocation(latitude, longitude, placemarkName, placemarAddress, accuracy.toDouble())
+                ApsisOne.trackLocation(latitude, longitude, placemarkName, placemarkAddress, accuracy.toDouble())
               } ?: run {
                 result.error("13", "Need accuracy parameter", null)
               }
@@ -115,8 +124,8 @@ class ApsisOnePlugin: FlutterPlugin, MethodCallHandler {
       }
     } else if (call.method == "startCollectingLocation") {
       call.argument<Int>("frequency")?.let { frequency ->
-        LocationFrequency.getByValue(frequency)?.let {
-          ApsisOne.startCollectingLocation(it, mainActivity)
+        LocationFrequency.getByValue(frequency)?.let { freq ->
+          activity?.let { ApsisOne.startCollectingLocation(freq, it) }
         } ?: run {
           result.error("15", "Need frequency parameter", null)
         }
@@ -129,7 +138,7 @@ class ApsisOnePlugin: FlutterPlugin, MethodCallHandler {
       call.argument<Int>("consentType")?.let { consentType ->
         ApsisOne.subscribeCollectDataConsentLost(object : ApsisCallback {
           override fun receive(topic: String, payload: JsonElement) {
-            
+            eventSink?.success(consentType)
           }
         })
       }
@@ -140,6 +149,30 @@ class ApsisOnePlugin: FlutterPlugin, MethodCallHandler {
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
     apiChannel.setMethodCallHandler(null)
-    consentChannel.setMethodCallHandler(null)
+    consentChannel.setStreamHandler(null)
+  }
+
+  override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
+    eventSink = events
+  }
+
+  override fun onCancel(arguments: Any?) {
+    eventSink = null
+  }
+
+  override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+    activity = binding.activity
+  }
+
+  override fun onDetachedFromActivityForConfigChanges() {
+    activity = null
+  }
+
+  override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+    activity = binding.activity
+  }
+
+  override fun onDetachedFromActivity() {
+    activity = null
   }
 }
