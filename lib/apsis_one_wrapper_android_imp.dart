@@ -8,49 +8,49 @@ class ApsisOneAndroid_Imp implements ApsisOneFlutter {
   @override
   Future<void> setMinimumLogLevel(int level) async {
     print('LogLevel set Android implementation');
-    // await _channel.invokeMethod('setMinimumLogLevel', {'logLevel':level});
+    await _channel.invokeMethod('setMinimumLogLevel', {'logLevel':level});
   }
 
   @override
   Future<void> provideConsent(int consentType) async {
     print('Provide consent Android implementation');
-    // await _channel.invokeMethod('provideConsent', {'consentType':consentType});
+    await _channel.invokeMethod('provideConsent', {'consentType':consentType});
   }
   
   @override
   Future<void> removeConsent(int consentType) async {
     print('Remove consent Android implementation');
-    // await _channel.invokeMethod('removeConsent', {'consentType':consentType});
+    await _channel.invokeMethod('removeConsent', {'consentType':consentType});
   }
 
   @override
   Future<void> trackScreenViewEvent(String event) async {
     print('Track manually screenView Android implementation');
-    // await _channel.invokeMethod('trackScreenViewEvent', {'event':event});
+    await _channel.invokeMethod('trackScreenViewEvent', {'event':event});
   }
 
   @override
   Future<void> trackCustomEvent(String eventId, Map data) async {
     print('Track customEvent Android implementation');
-    // await _channel.invokeMethod('trackCustomEvent', {'eventId':eventId, 'data':data});
+    await _channel.invokeMethod('trackCustomEvent', {'eventId':eventId, 'data':data});
   }
 
   @override
-  Future<void> trackLocation(double latitude, double longitude, String placemarkName, String placemarAddress, int accuracy) async {
+  Future<void> trackLocation(double latitude, double longitude, String placemarkName, String placemarkAddress, int accuracy) async {
     print('Track location Android implementation');
-    // await _channel.invokeMethod('trackLocation', {'latitude':latitude, 'longitude':longitude, 'placemarkName':placemarkName, 'placemarAddress':placemarAddress, 'accuracy':accuracy});
+    await _channel.invokeMethod('trackLocation', {'latitude':latitude, 'longitude':longitude, 'placemarkName':placemarkName, 'placemarkAddress':placemarkAddress, 'accuracy':accuracy});
   }
 
   @override
   Future<void> startCollectingLocation(int frequency) async {
     print('Start collecting location Android implementation');
-    // await _channel.invokeMethod('startCollectingLocation', {'frequency':frequency});
+    await _channel.invokeMethod('startCollectingLocation', {'frequency':frequency});
   }
   
   @override
   Future<void> stopCollectingLocation() async {
     print('Stop collecting location Android implementation');
-    // await _channel.invokeMethod('stopCollectingLocation'); 
+    await _channel.invokeMethod('stopCollectingLocation'); 
   }
 
   @override
@@ -67,22 +67,22 @@ class ApsisOneAndroid_Imp implements ApsisOneFlutter {
   @override
   int get oneLocationFrequencyLow => 0;
   @override
-  int get oneLocationFrequencyMedium => 1;
+  int get oneLocationFrequencyMedium => 0;
   @override
-  int get oneLocationFrequencyHigh => 2;
+  int get oneLocationFrequencyHigh => 1;
   @override
   int get oneConsentTypeCollectData => 0;
   @override
   int get oneConsentTypeCollectLocation => 1;
   @override
-  int get oneLogLevelInfo => 0;
+  int get oneLogLevelInfo => 4;
   @override
-  int get oneLogLevelDebug => 1;
+  int get oneLogLevelDebug => 3;
   @override
   int get oneLogLevelWarning => 2;
   @override
-  int get oneLogLevelError => 3;
+  int get oneLogLevelError => 1;
   @override
-  int get oneLogLevelNone => 4;
+  int get oneLogLevelNone => 0;
 
 }
