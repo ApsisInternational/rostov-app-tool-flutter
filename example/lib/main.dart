@@ -19,7 +19,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   _showDialog(BuildContext context) {
     BlurryDialog alert =
         const BlurryDialog('Consents', 'Collection Data Consent was lost');
@@ -67,7 +66,7 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> {
   int selectedIndex = 0;
   final Widget _mainPage = const FirstPage();
-  final Widget _secondPage = SecondPage();
+  final Widget _secondPage = const SecondPage();
 
   @override
   Widget build(BuildContext context) {
