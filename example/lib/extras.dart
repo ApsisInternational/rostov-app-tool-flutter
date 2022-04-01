@@ -2,34 +2,40 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class BlurryDialog extends StatelessWidget {
-  String title;
-  String content;
+  final String title;
+  final String content;
 
-  BlurryDialog(this.title, this.content);
-  TextStyle textStyle = TextStyle (color: Colors.black);
+  const BlurryDialog(this.title, this.content, {Key? key}) : super(key: key);
+  final TextStyle textStyle = const TextStyle(color: Colors.black);
 
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-      child:  AlertDialog(
-      title: new Text(title,style: textStyle,),
-      content: new Text(content, style: textStyle,),
-      actions: <Widget>[
-        new FlatButton(
-          child: Text("OK"),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
-      ));
+        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+        child: AlertDialog(
+          title: Text(
+            title,
+            style: textStyle,
+          ),
+          content: Text(
+            content,
+            style: textStyle,
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ));
   }
 }
 
 class CustomButton extends StatelessWidget {
   const CustomButton({required this.onPressed, required this.title, Key? key})
-    : super(key: key);
+      : super(key: key);
 
   final VoidCallback onPressed;
   final String title;

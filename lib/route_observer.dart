@@ -16,7 +16,7 @@ class ONERouteObserver extends RouteObserver<PageRoute<dynamic>> {
   }
 
   @override
-  void didReplace({ Route<dynamic>? newRoute, Route<dynamic>? oldRoute }) {
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
     if (newRoute is PageRoute) {
       _trackScreenView(newRoute);

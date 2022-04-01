@@ -1,11 +1,9 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:apsis_one/apsis_one.dart';
 import 'extras.dart';
-import 'main.dart';
 
 class FirstPage extends StatefulWidget {
   const FirstPage({Key? key}) : super(key: key);
@@ -14,39 +12,53 @@ class FirstPage extends StatefulWidget {
 }
 
 class FirstPageState extends State<FirstPage> {
-  static const MethodChannel _methodChannel = MethodChannel('com.apsis.one/sampleapp');
+  static const MethodChannel _methodChannel =
+      MethodChannel('com.apsis.one/sampleapp');
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('ApsisOne Flutter Example App'),
-        ),
-        body: Center(
-          child: Center(child: mainMenu()),
-        ),
+    return Center(
+      child: Center(child: mainMenu()),
     );
   }
 
   Widget mainMenu() {
-    return Column (
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              CustomButton (onPressed: _provideCollectDataConsent, title: 'Provide data consent'),
-              CustomButton (onPressed: _removeCollectDataConsent, title: 'Remove data consent'),
-              CustomButton (onPressed: _provideCollectLocationConsent, title: 'Provide location consent'),
-              CustomButton (onPressed: _removeCollectLocationConsent, title: 'Remove location consent'),
-              CustomButton (onPressed: _trackScreenViewEvent, title: 'Track screenView event'),
-              CustomButton (onPressed: _trackCustomEvent, title: 'Track custom event'),
-              CustomButton (onPressed: _trackCustomLocation, title: 'Track custom location'),
-              CustomButton (onPressed: _startCollectLocationLow, title: 'Start collecting location low'),
-              CustomButton (onPressed: _startCollectLocationMedium, title: 'Start collecting location medium'),
-              CustomButton (onPressed: _startCollectLocationHigh, title: 'Start collecting location high'),
-              CustomButton (onPressed: _stopCollectLocation, title: 'Stop collecting location'),
-              CustomButton (onPressed: _presentCustomView, title: 'Present Custom view'),
-              CustomButton (onPressed: _presentView, title: 'iOS Present Modally native view'),
-            ],
-          );
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        CustomButton(
+            onPressed: _provideCollectDataConsent,
+            title: 'Provide data consent'),
+        CustomButton(
+            onPressed: _removeCollectDataConsent, title: 'Remove data consent'),
+        CustomButton(
+            onPressed: _provideCollectLocationConsent,
+            title: 'Provide location consent'),
+        CustomButton(
+            onPressed: _removeCollectLocationConsent,
+            title: 'Remove location consent'),
+        CustomButton(
+            onPressed: _trackScreenViewEvent, title: 'Track screenView event'),
+        CustomButton(onPressed: _trackCustomEvent, title: 'Track custom event'),
+        CustomButton(
+            onPressed: _trackCustomLocation, title: 'Track custom location'),
+        CustomButton(
+            onPressed: _startCollectLocationLow,
+            title: 'Start collecting location low'),
+        CustomButton(
+            onPressed: _startCollectLocationMedium,
+            title: 'Start collecting location medium'),
+        CustomButton(
+            onPressed: _startCollectLocationHigh,
+            title: 'Start collecting location high'),
+        CustomButton(
+            onPressed: _stopCollectLocation, title: 'Stop collecting location'),
+        CustomButton(
+            onPressed: _presentCustomView, title: 'Present Custom view'),
+        CustomButton(
+            onPressed: _presentView, title: 'iOS Present Modally native view'),
+      ],
+    );
   }
 
   void _provideCollectDataConsent() {
@@ -70,18 +82,21 @@ class FirstPageState extends State<FirstPage> {
   }
 
   void _trackCustomEvent() {
-      var testCustomEventData = {
-        'source' : 'testSource',
-        'number' : 321,
-        'numberWithDecimal' : 3.14159,
-        'text' : 'testText',
-        'trueFalse' : true
-      };
-      ApsisOne.trackCustomEvent('com.apsis1.events.transaction.custom-testcustomevent-651e5udu28', testCustomEventData);
+    var testCustomEventData = {
+      'source': 'testSource',
+      'number': 321,
+      'numberWithDecimal': 3.14159,
+      'text': 'testText',
+      'trueFalse': true
+    };
+    ApsisOne.trackCustomEvent(
+        'com.apsis1.events.transaction.custom-testcustomevent-651e5udu28',
+        testCustomEventData);
   }
 
   void _trackCustomLocation() {
-    ApsisOne.trackLocation(59.325005, 18.070897, 'Test placemark name', 'Test placemark address', 3);
+    ApsisOne.trackLocation(59.325005, 18.070897, 'Test placemark name',
+        'Test placemark address', 3);
   }
 
   void _startCollectLocationLow() {
