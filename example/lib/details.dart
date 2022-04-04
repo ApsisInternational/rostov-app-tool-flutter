@@ -1,25 +1,22 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class DetailView extends StatelessWidget {
+  const DetailView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Second view'),
+        title: const Text('Details view'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Second view',
-            ),
+          children: const <Widget> [
+            Text('Details view'),
           ],
         ),
       ),
     );
   }
-
 }

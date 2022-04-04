@@ -31,8 +31,6 @@
 }
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
-    NSLog(@"Method was called: %@ with args %@", call.method, call.arguments);
-    
     if ([call.method isEqualToString:@"setMinimumLogLevel"]) {
         ONELogLevel logLevel = (ONELogLevel)[call.arguments[@"logLevel"] intValue];
         [ApsisOneAPI setMinimumLogLevel:logLevel];

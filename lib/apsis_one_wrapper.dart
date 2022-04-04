@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'dart:io' show Platform;
 import 'apsis_one_wrapper_android_imp.dart';
 import 'apsis_one_wrapper_ios_imp.dart';
@@ -28,8 +27,8 @@ abstract class ApsisOneFlutter {
 
     factory ApsisOneFlutter() {
         if (Platform.isAndroid) {
-            return new ApsisOneAndroid_Imp();            
+            return ApsisOneAndroid_Imp();            
         }
-        return new ApsisOneIOS_Imp();
+        return ApsisOneIOS_Imp();
     }  
 }
