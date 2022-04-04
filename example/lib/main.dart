@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:apsis_one/apsis_one.dart';
-import 'second.dart';
 import 'first.dart';
 import 'extras.dart';
 import 'details.dart';
@@ -64,48 +63,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  int selectedIndex = 0;
-  final Widget _mainPage = const FirstPage();
-  final Widget _secondPage = const SecondPage();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ApsisOne Flutter Example App'),
-      ),
-      body: getBody(),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: selectedIndex,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.contacts),
-            label: 'Main',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.mail),
-            label: 'Second',
-          ),
-        ],
-        onTap: (int index) {
-          onTapHandler(index);
-        },
-      ),
-    );
-  }
-
-  Widget getBody() {
-    if (selectedIndex == 0) {
-      return _mainPage;
-    } else {
-      return _secondPage;
-    }
-  }
-
-  void onTapHandler(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+        appBar: AppBar(
+          title: const Text('AppsisOne App Tool example'),
+        ),
+        body: const FirstPage());
   }
 }

@@ -17,7 +17,7 @@ class FirstPageState extends State<FirstPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return SingleChildScrollView(
       child: Center(child: mainMenu()),
     );
   }
