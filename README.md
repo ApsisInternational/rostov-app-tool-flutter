@@ -4,7 +4,7 @@ A Flutter plugin for iOS and Android allowing to use ApsisOne's App Tool mobile 
 
 |                | Android | iOS      |
 |----------------|---------|----------|
-| **Support**    | SDK ??? | iOS 11+  |
+| **Support**    | SDK 26+ | iOS 11+  |
 
 ## Features
 
@@ -50,7 +50,25 @@ If editing `Info.plist` as text, add:
 
 ### Android
 
-TODO: Describe android quick start tips and some minimum requirements
+Add content provider to your app's AndroidManifest.xml:
+```
+       <provider
+           android:authorities="${applicationId}.ApsisContentProvider"
+           android:exported="false"
+           android:enabled="true"
+           android:name="com.apsis.android.apsisone.integration.ApsisContentProvider"/>
+```
+
+Add permissions (if you want to track user location):
+```
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+```
+
+You can use one of coarse and fine location tracking methods, or both of them. Background location permission is optional.
+
+Change `minSdkVersion` in file `android/app/build.gradle` to fit SDK requirements (26 or above).
 
 
 ### Provide route observing for App Tool
