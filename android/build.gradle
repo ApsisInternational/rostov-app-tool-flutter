@@ -21,7 +21,6 @@ rootProject.allprojects {
         maven {
             url "https://apsisone.jfrog.io/artifactory/default-maven-virtual"
         }
-        mavenLocal()
     }
 }
 
