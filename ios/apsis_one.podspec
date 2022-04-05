@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'apsis_one'
-  s.version          = '0.0.1'
+  s.version          = '0.0.2'
   s.summary          = 'Flutter wrapper for ApsisOne iOS SDK'
   s.homepage         = 'https://apsis.com'
   s.license          = { :type => 'Custom', :file => '../LICENSE' }
