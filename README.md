@@ -1,4 +1,4 @@
-# Camera Plugin
+# App Tool Plugin
 
 A Flutter plugin for iOS and Android allowing to use ApsisOne's App Tool mobile SDK.
 
@@ -11,11 +11,16 @@ A Flutter plugin for iOS and Android allowing to use ApsisOne's App Tool mobile 
 * Automatic screenView events collecting
 * Create and send custom events
 * Location collecting
-* Create and sent custom location events
+* Create and send custom location events
 
 ## Installation
 
 First, add `apsis_one` as a [dependency in your pubspec.yaml file](https://flutter.dev/using-packages/).
+
+Then, import package:
+```dart
+import 'package:apsis_one/apsis_one.dart';
+```
 
 ### iOS
 
@@ -44,7 +49,7 @@ If editing `Info.plist` as text, add:
 ```xml
 <key>UIBackgroundModes</key>
 <array>
-	<string>location</string>
+<string>location</string>
 </array>
 ```
 
