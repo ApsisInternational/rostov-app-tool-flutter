@@ -23,7 +23,7 @@
     ApsisOnePlugin *instance = ApsisOnePlugin.new;
     instance.apsisOneMethodChannel = [FlutterMethodChannel methodChannelWithName:@"com.apsis.one/publicapi"
                                                        binaryMessenger:[registrar messenger]];
-    instance.apsisOneEventChannel = [FlutterEventChannel eventChannelWithName:@"com.apsis.one/callbacks"
+    instance.apsisOneEventChannel = [FlutterEventChannel eventChannelWithName:@"com.apsis.one/consents"
                                                               binaryMessenger:[registrar messenger]];
     [registrar addMethodCallDelegate:instance
                              channel:instance.apsisOneMethodChannel];
