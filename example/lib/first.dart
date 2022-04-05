@@ -17,49 +17,47 @@ class FirstPageState extends State<FirstPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return SingleChildScrollView(
       child: Center(child: mainMenu()),
     );
   }
 
   Widget mainMenu() {
-    return SingleChildScrollView(
-      child:  Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          CustomButton(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        CustomButton(
             onPressed: _provideCollectDataConsent,
             title: 'Provide data consent'),
-          CustomButton(
+        CustomButton(
             onPressed: _removeCollectDataConsent, title: 'Remove data consent'),
-          CustomButton(
+        CustomButton(
             onPressed: _provideCollectLocationConsent,
             title: 'Provide location consent'),
-          CustomButton(
+        CustomButton(
             onPressed: _removeCollectLocationConsent,
             title: 'Remove location consent'),
-          CustomButton(
+        CustomButton(
             onPressed: _trackScreenViewEvent, title: 'Track screenView event'),
-          CustomButton(onPressed: _trackCustomEvent, title: 'Track custom event'),
-          CustomButton(
+        CustomButton(onPressed: _trackCustomEvent, title: 'Track custom event'),
+        CustomButton(
             onPressed: _trackCustomLocation, title: 'Track custom location'),
-          CustomButton(
+        CustomButton(
             onPressed: _startCollectLocationLow,
             title: 'Start collecting location low'),
-          CustomButton(
+        CustomButton(
             onPressed: _startCollectLocationMedium,
             title: 'Start collecting location medium'),
-          CustomButton(
+        CustomButton(
             onPressed: _startCollectLocationHigh,
             title: 'Start collecting location high'),
-          CustomButton(
+        CustomButton(
             onPressed: _stopCollectLocation, title: 'Stop collecting location'),
-          CustomButton(
+        CustomButton(
             onPressed: _presentCustomView, title: 'Present Custom view'),
-          CustomButton(
+        CustomButton(
             onPressed: _presentView, title: 'iOS Present Modally native view'),
-        ],
-      )
+      ],
     );
   }
 
