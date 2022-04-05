@@ -18,6 +18,9 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://apsisone.jfrog.io/artifactory/default-maven-virtual"
+        }
     }
 }
 
@@ -41,10 +44,12 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 26
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.apsis.apsisone:apsisone-core:0.0.35"
+    implementation "com.google.code.gson:gson:2.8.2"
 }
