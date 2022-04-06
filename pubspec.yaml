@@ -2,7 +2,7 @@ name: apsis_one
 description: A Flutter plugin that provides a ApsisOne's App Tool widget on Android and iOS.
 repository: https://github.com/ApsisInternational/rostov-app-tool-flutter
 issue_tracker: https://github.com/ApsisInternational/rostov-app-tool-flutter/issues
-version: 0.0.2
+version: 0.0.3
 
 environment:
   sdk: ">=2.16.1 <3.0.0"
