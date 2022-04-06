@@ -1,8 +1,8 @@
-name: Build demo app
+name: Check building demo app
 
 # Controls when the workflow will run
 on:
-  push:
+  pull_request:
     branches: [ main ]
   workflow_dispatch:
 
@@ -30,9 +30,3 @@ jobs:
           cd example
           flutter build apk
       
-      - name: Upload demo app APK to GitHub
-        uses: actions/upload-artifact@v2
-        with:
-          name: Flutter demo App
-          path: example/build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 14
