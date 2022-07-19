@@ -12,6 +12,7 @@ import ApsisOne
         self.locationManager.delegate = self
         self.requestLocationAuthorization()
         GeneratedPluginRegistrant.register(with: self)
+                    
         let controller: FlutterViewController = window?.rootViewController as! FlutterViewController
         let channel = FlutterMethodChannel.init(name: "com.apsis.one/sampleapp", binaryMessenger: controller.binaryMessenger)
         channel.setMethodCallHandler({

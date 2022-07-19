@@ -5,6 +5,7 @@ import 'package:apsis_one/apsis_one.dart';
 import 'first.dart';
 import 'extras.dart';
 import 'details.dart';
+import 'contextual_message_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,6 +49,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/': (context) => const MyHomePage(),
         '/SecondFlutterView': (context) => const DetailView(),
+        '/ContextualMessageView': (context) => const ContextualMessageView(),
       },
     );
   }

@@ -1,29 +1,16 @@
-
 import 'dart:async';
+import 'package:flutter/material.dart';
+
 import 'apsis_one_wrapper.dart';
 import 'route_observer.dart';
 
-enum ONELocationFrequency {
-  low,
-  medium,
-  high
-}
+enum ONELocationFrequency { low, medium, high }
 
-enum ONEConsentType {
-  collectData,
-  collectLocation
-}
+enum ONEConsentType { collectData, collectLocation }
 
-enum ONELogLevel {
-  info,
-  debug,
-  warning,
-  error,
-  none
-}
+enum ONELogLevel { info, debug, warning, error, none }
 
-
-class ApsisOne {    
+class ApsisOne {
   static ApsisOneFlutter apsisOne = ApsisOneFlutter();
 
   static ONERouteObserver oneRouteObserver = ONERouteObserver();
@@ -40,7 +27,7 @@ class ApsisOne {
 
   static Future<void> removeConsent(ONEConsentType consentType) async {
     final int nativeConsentType = getNativeConsentType(consentType);
-    await apsisOne.removeConsent(nativeConsentType);    
+    await apsisOne.removeConsent(nativeConsentType);
   }
 
   static Future<void> trackScreenViewEvent(String event) async {
@@ -51,11 +38,14 @@ class ApsisOne {
     await apsisOne.trackCustomEvent(eventId, data);
   }
 
-  static Future<void> trackLocation(double latitude, double longitude, String placemarkName, String placemarAddress, int accuracy) async {
-    await apsisOne.trackLocation(latitude, longitude, placemarkName, placemarAddress, accuracy);
+  static Future<void> trackLocation(double latitude, double longitude,
+      String placemarkName, String placemarAddress, int accuracy) async {
+    await apsisOne.trackLocation(
+        latitude, longitude, placemarkName, placemarAddress, accuracy);
   }
 
-  static Future<void> startCollectingLocation(ONELocationFrequency frequency) async {
+  static Future<void> startCollectingLocation(
+      ONELocationFrequency frequency) async {
     final int nativeLocationFrequency = getNativeFrequency(frequency);
     await apsisOne.startCollectingLocation(nativeLocationFrequency);
   }
@@ -64,10 +54,15 @@ class ApsisOne {
     await apsisOne.stopCollectingLocation();
   }
 
-  static Future<void> subscribeOnConsentLost(Future<dynamic> handler(ONEConsentType consentType)) async {
+  static Future<void> subscribeOnConsentLost(
+      Future<dynamic> handler(ONEConsentType consentType)) async {
     await apsisOne.subscribeOnConsentLost((int consentType) async {
       handler(consentTypeFromNative(consentType));
     });
+  }
+
+  static Widget contextualMessageView(String messageId) {
+    return apsisOne.contextualMessageView(messageId);
   }
 
   static int getNativeLogLevel(ONELogLevel level) {

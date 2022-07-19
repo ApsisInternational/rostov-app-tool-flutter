@@ -1,58 +1,80 @@
 import 'apsis_one_wrapper.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 class ApsisOneIOS_Imp implements ApsisOneFlutter {
   final MethodChannel _channel = const MethodChannel('com.apsis.one/publicapi');
-  final EventChannel _eventChannel = const EventChannel('com.apsis.one/consents');
+  final EventChannel _eventChannel =
+      const EventChannel('com.apsis.one/consents');
 
   @override
   Future<void> setMinimumLogLevel(int level) async {
-    await _channel.invokeMethod('setMinimumLogLevel', {'logLevel':level});
+    await _channel.invokeMethod('setMinimumLogLevel', {'logLevel': level});
   }
 
   @override
   Future<void> provideConsent(int consentType) async {
-    await _channel.invokeMethod('provideConsent', {'consentType':consentType});
+    await _channel.invokeMethod('provideConsent', {'consentType': consentType});
   }
-  
+
   @override
   Future<void> removeConsent(int consentType) async {
-    await _channel.invokeMethod('removeConsent', {'consentType':consentType});
+    await _channel.invokeMethod('removeConsent', {'consentType': consentType});
   }
 
   @override
   Future<void> trackScreenViewEvent(String event) async {
-    await _channel.invokeMethod('trackScreenViewEvent', {'event':event});
+    await _channel.invokeMethod('trackScreenViewEvent', {'event': event});
   }
 
   @override
   Future<void> trackCustomEvent(String eventId, Map data) async {
-    await _channel.invokeMethod('trackCustomEvent', {'eventId':eventId, 'data':data});
+    await _channel
+        .invokeMethod('trackCustomEvent', {'eventId': eventId, 'data': data});
   }
 
   @override
-  Future<void> trackLocation(double latitude, double longitude, String placemarkName, String placemarAddress, int accuracy) async {
-    await _channel.invokeMethod('trackLocation', {'latitude':latitude, 'longitude':longitude, 'placemarkName':placemarkName, 'placemarAddress':placemarAddress, 'accuracy':accuracy});
+  Future<void> trackLocation(double latitude, double longitude,
+      String placemarkName, String placemarAddress, int accuracy) async {
+    await _channel.invokeMethod('trackLocation', {
+      'latitude': latitude,
+      'longitude': longitude,
+      'placemarkName': placemarkName,
+      'placemarAddress': placemarAddress,
+      'accuracy': accuracy
+    });
   }
 
   @override
   Future<void> startCollectingLocation(int frequency) async {
-    await _channel.invokeMethod('startCollectingLocation', {'frequency':frequency});
-  }
-  
-  @override
-  Future<void> stopCollectingLocation() async {
-    await _channel.invokeMethod('stopCollectingLocation'); 
+    await _channel
+        .invokeMethod('startCollectingLocation', {'frequency': frequency});
   }
 
   @override
-  Future<void> subscribeOnConsentLost(Future<dynamic> handler(int consentType)) async {
+  Future<void> stopCollectingLocation() async {
+    await _channel.invokeMethod('stopCollectingLocation');
+  }
+
+  @override
+  Future<void> subscribeOnConsentLost(
+      Future<dynamic> handler(int consentType)) async {
     consentLostHandler(dynamic event) {
       handler(event);
     }
-    consentLostErrorHandler(dynamic error) => print('Received error: ${error.message}');
-    _eventChannel.receiveBroadcastStream().listen(consentLostHandler, onError: consentLostErrorHandler);
-    await _channel.invokeMethod('subscribeOnConsentLost', {'consentType':oneConsentTypeCollectData});
+
+    consentLostErrorHandler(dynamic error) =>
+        print('Received error: ${error.message}');
+    _eventChannel
+        .receiveBroadcastStream()
+        .listen(consentLostHandler, onError: consentLostErrorHandler);
+    await _channel.invokeMethod(
+        'subscribeOnConsentLost', {'consentType': oneConsentTypeCollectData});
+  }
+
+  @override
+  Widget contextualMessageView(String messageId) {
+    return IOSCompositionWidget(key: null, messageId: messageId);
   }
 
   @override
@@ -75,4 +97,24 @@ class ApsisOneIOS_Imp implements ApsisOneFlutter {
   int get oneLogLevelError => 3;
   @override
   int get oneLogLevelNone => 10;
+}
+
+class IOSCompositionWidget extends StatelessWidget {
+  const IOSCompositionWidget({super.key, required this.messageId});
+
+  final String messageId;
+
+  @override
+  Widget build(BuildContext context) {
+    const String viewType = 'com.apsis.one.contextualmessage';
+    final Map<String, dynamic> creationParams = <String, dynamic>{};
+    creationParams['messageId'] = messageId;
+
+    return UiKitView(
+      viewType: viewType,
+      layoutDirection: TextDirection.ltr,
+      creationParams: creationParams,
+      creationParamsCodec: const StandardMessageCodec(),
+    );
+  }
 }
