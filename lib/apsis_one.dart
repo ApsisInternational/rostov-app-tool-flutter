@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'apsis_one_wrapper.dart';
 import 'route_observer.dart';
 
@@ -68,6 +69,10 @@ class ApsisOne {
     await apsisOne.subscribeOnConsentLost((int consentType) async {
       handler(consentTypeFromNative(consentType));
     });
+  }
+
+  static Widget contextualMessageView(String messageId) {
+    return apsisOne.contextualMessageView(messageId);
   }
 
   static int getNativeLogLevel(ONELogLevel level) {
