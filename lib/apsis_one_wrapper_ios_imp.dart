@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'apsis_one_wrapper.dart';
 import 'package:flutter/services.dart';
 
@@ -53,6 +54,11 @@ class ApsisOneIOS_Imp implements ApsisOneFlutter {
     consentLostErrorHandler(dynamic error) => print('Received error: ${error.message}');
     _eventChannel.receiveBroadcastStream().listen(consentLostHandler, onError: consentLostErrorHandler);
     await _channel.invokeMethod('subscribeOnConsentLost', {'consentType':oneConsentTypeCollectData});
+  }
+
+  @override
+  Widget contextualMessageView(String messageId) {
+    throw UnimplementedError();
   }
 
   @override

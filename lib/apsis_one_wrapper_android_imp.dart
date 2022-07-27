@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'apsis_one_wrapper.dart';
+import 'android_virtual_display_view.dart';
 import 'package:flutter/services.dart';
 
 class ApsisOneAndroid_Imp implements ApsisOneFlutter {
@@ -63,6 +65,11 @@ class ApsisOneAndroid_Imp implements ApsisOneFlutter {
     _eventChannel.receiveBroadcastStream().listen(consentLostHandler, onError: consentLostErrorHandler);
     await _channel.invokeMethod('subscribeOnConsentLost', {'consentType':oneConsentTypeCollectData});
   } 
+
+  @override
+  Widget contextualMessageView(String discriminator) {
+    return AndroidVirtualDisplayView(discriminator: discriminator);
+  }
 
   @override
   int get oneLocationFrequencyLow => 0;

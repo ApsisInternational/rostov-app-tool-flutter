@@ -57,6 +57,11 @@ class FirstPageState extends State<FirstPage> {
             onPressed: _presentCustomView, title: 'Present Custom view'),
         CustomButton(
             onPressed: _presentView, title: 'iOS Present Modally native view'),
+
+        CustomButton(
+            onPressed: _presentContextualView1, title: 'Present Contextual view 1'),
+        CustomButton(
+            onPressed: _presentContextualView2, title: 'Present Contextual view 2'),
       ],
     );
   }
@@ -122,4 +127,13 @@ class FirstPageState extends State<FirstPage> {
   Future<void> _presentView() async {
     await _methodChannel.invokeMethod('switchView');
   }
+
+  void _presentContextualView1() {
+    Navigator.pushNamed(context, '/ContextualView1');
+  }
+
+  void _presentContextualView2() {
+    Navigator.pushNamed(context, '/ContextualView2');
+  }
+
 }

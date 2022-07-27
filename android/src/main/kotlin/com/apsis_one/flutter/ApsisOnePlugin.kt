@@ -8,6 +8,7 @@ import com.apsis.android.apsisone.ApsisOne
 import com.apsis.android.apsisone.integration.LocationFrequency
 import com.apsis.android.apsisone.util.ApsisUtils
 import com.apsis.android.apsisone.util.LogLevel
+import com.apsis.android.apsisone.util.Logger
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -18,7 +19,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import org.json.JSONObject
 
 /** ApsisOnePlugin */
 class ApsisOnePlugin: FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler, ActivityAware {
@@ -38,6 +38,12 @@ class ApsisOnePlugin: FlutterPlugin, MethodCallHandler, EventChannel.StreamHandl
     apiChannel.setMethodCallHandler(this)
     consentChannel = EventChannel(flutterPluginBinding.binaryMessenger, "com.apsis.one/consents")
     consentChannel.setStreamHandler(this)
+    if(flutterPluginBinding.platformViewRegistry.registerViewFactory("ApsisContextualView", ContextualViewFactory()) == true) {
+      Logger.i("View factory registered successfully")
+    } else {
+      Logger.w("Error while registering view factory")
+    }
+    Logger.i("Flutter plugin attached to engine")
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
