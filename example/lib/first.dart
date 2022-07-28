@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:apsis_one/apsis_one.dart';
 import 'extras.dart';
+import 'dart:io' show Platform;
 
 class FirstPage extends StatefulWidget {
   const FirstPage({Key? key}) : super(key: key);
@@ -17,53 +17,63 @@ class FirstPageState extends State<FirstPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<CustomButton> items = [];
+    items.add(CustomButton(
+        onPressed: _provideCollectDataConsent, title: 'Provide data consent'));
+    items.add(CustomButton(
+        onPressed: _removeCollectDataConsent, title: 'Remove data consent'));
+    items.add(CustomButton(
+        onPressed: _provideCollectLocationConsent,
+        title: 'Provide location consent'));
+    items.add(CustomButton(
+        onPressed: _removeCollectLocationConsent,
+        title: 'Remove location consent'));
+    items.add(CustomButton(
+        onPressed: _trackScreenViewEvent, title: 'Track screenView event'));
+    items.add(CustomButton(
+        onPressed: _trackCustomEvent, title: 'Track custom event'));
+    items.add(CustomButton(
+        onPressed: _trackCustomLocation, title: 'Track custom location'));
+    items.add(CustomButton(
+        onPressed: _startCollectLocationLow,
+        title: 'Start collecting location low'));
+    items.add(CustomButton(
+        onPressed: _startCollectLocationMedium,
+        title: 'Start collecting location medium'));
+    items.add(CustomButton(
+        onPressed: _startCollectLocationHigh,
+        title: 'Start collecting location high'));
+    items.add(CustomButton(
+        onPressed: _stopCollectLocation, title: 'Stop collecting location'));
+    items.add(CustomButton(
+        onPressed: _presentCustomView, title: 'Present Custom view'));
+
+    //Platform dependent examples
+    if (Platform.isAndroid) {
+      items.add(CustomButton(
+          onPressed: _presentContextualView1,
+          title: 'Present Contextual view 1'));
+      items.add(CustomButton(
+          onPressed: _presentContextualView2,
+          title: 'Present Contextual view 2'));
+    } else if (Platform.isIOS) {
+      items.add(CustomButton(
+          onPressed: _presentView, title: 'Present native view modally'));
+      items.add(CustomButton(
+          onPressed: _presentContextualView3,
+          title: 'Present Contextual View'));
+    }
+
     return SingleChildScrollView(
-      child: Center(child: mainMenu()),
-    );
+        child: Center(
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: mainMenu(items)),
+    ));
   }
 
-  Widget mainMenu() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        CustomButton(
-            onPressed: _provideCollectDataConsent,
-            title: 'Provide data consent'),
-        CustomButton(
-            onPressed: _removeCollectDataConsent, title: 'Remove data consent'),
-        CustomButton(
-            onPressed: _provideCollectLocationConsent,
-            title: 'Provide location consent'),
-        CustomButton(
-            onPressed: _removeCollectLocationConsent,
-            title: 'Remove location consent'),
-        CustomButton(
-            onPressed: _trackScreenViewEvent, title: 'Track screenView event'),
-        CustomButton(onPressed: _trackCustomEvent, title: 'Track custom event'),
-        CustomButton(
-            onPressed: _trackCustomLocation, title: 'Track custom location'),
-        CustomButton(
-            onPressed: _startCollectLocationLow,
-            title: 'Start collecting location low'),
-        CustomButton(
-            onPressed: _startCollectLocationMedium,
-            title: 'Start collecting location medium'),
-        CustomButton(
-            onPressed: _startCollectLocationHigh,
-            title: 'Start collecting location high'),
-        CustomButton(
-            onPressed: _stopCollectLocation, title: 'Stop collecting location'),
-        CustomButton(
-            onPressed: _presentCustomView, title: 'Present Custom view'),
-        CustomButton(
-            onPressed: _presentView, title: 'iOS Present Modally native view'),
-
-        CustomButton(
-            onPressed: _presentContextualView1, title: 'Present Contextual view 1'),
-        CustomButton(
-            onPressed: _presentContextualView2, title: 'Present Contextual view 2'),
-      ],
-    );
+  List<Widget> mainMenu(List<CustomButton> buttons) {
+    return buttons;
   }
 
   void _provideCollectDataConsent() {
@@ -136,4 +146,7 @@ class FirstPageState extends State<FirstPage> {
     Navigator.pushNamed(context, '/ContextualView2');
   }
 
+  void _presentContextualView3() {
+    Navigator.pushNamed(context, '/ContextualView3');
+  }
 }

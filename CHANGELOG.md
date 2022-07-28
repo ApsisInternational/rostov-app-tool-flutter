@@ -1,3 +1,7 @@
+# 0.0.4
+
+* Contextual messages support
+
 # 0.0.3
 
 * Publish automation
