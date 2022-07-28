@@ -5,8 +5,9 @@ import 'package:apsis_one/apsis_one.dart';
 import 'first.dart';
 import 'extras.dart';
 import 'details.dart';
-import 'contextual1.dart';
-import 'contextual2.dart';
+import 'contextual_messages/contextual1.dart';
+import 'contextual_messages/contextual2.dart';
+import 'contextual_messages/contextual_message_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,6 +53,7 @@ class _MyAppState extends State<MyApp> {
         '/SecondFlutterView': (context) => const DetailView(),
         '/ContextualView1': (context) => const ContextualView1(),
         '/ContextualView2': (context) => const ContextualView2(),
+        '/ContextualView3': (context) => const ContextualMessageView(),
       },
     );
   }
