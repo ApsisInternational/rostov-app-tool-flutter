@@ -1,6 +1,6 @@
 # App Tool Plugin
 
-A Flutter plugin for iOS and Android allowing to use ApsisOne's App Tool mobile SDK.
+A Flutter plugin for iOS and Android allowing to use ApsisOne's AppTool mobile SDK.
 
 |                | Android | iOS      |
 |----------------|---------|----------|
