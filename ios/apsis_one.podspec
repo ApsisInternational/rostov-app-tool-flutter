@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'apsis_one'
-  s.version          = '0.0.2'
+  s.version          = '0.0.5'
   s.summary          = 'Flutter wrapper for ApsisOne iOS SDK'
   s.homepage         = 'https://apsis.com'
   s.license          = { :type => 'Custom', :file => '../LICENSE' }
@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'ApsisOne', '~> 0.10.1'
+  s.dependency 'ApsisOne', '~> 0.11.3'
   s.platform = :ios, '11.0'
 
   # Flutter.framework does not contain a i386 slice.
